@@ -60,6 +60,17 @@ class sentry::config
     group   => $sentry::group,
     mode    => '0640',
   } ->
+  if $sentry::version and (
+      versioncmp($sentry::version, $sentry::params::version) < 0 or versioncmp($version, '8.0.0') >= 0
+  ) {
+    file { "${sentry::path}/config.yml":
+      ensure  => present,
+      content => template('sentry/config.yml.erb'),
+      owner   => $sentry::owner,
+      group   => $sentry::group,
+      mode    => '0640',
+    } ->
+  }
 
   file { "${sentry::path}/.initialized":
     ensure  => present,
