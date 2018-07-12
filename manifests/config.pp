@@ -61,7 +61,7 @@ class sentry::config
     mode    => '0640',
   } ->
   if $sentry::version and (
-      versioncmp($sentry::version, $sentry::params::version) < 0 or versioncmp($version, '8.0.0') >= 0
+      versioncmp($sentry::version, $sentry::params::version) < 0 or versioncmp($sentry::version, '8.0.0') >= 0
   ) {
     file { "${sentry::path}/config.yml":
       ensure  => present,

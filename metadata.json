@@ -1,6 +1,6 @@
 {
   "name": "venmo-sentry",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Venmo",
   "summary": "Puppet module for managing the Sentry realtime event logging and aggregation platform",
   "license": "Apache-2.0",
