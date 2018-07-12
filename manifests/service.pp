@@ -21,7 +21,7 @@ class sentry::service
   anchor { 'sentry::service::begin': } ->
 
   if $sentry::version and (
-      versioncmp($sentry::version, $sentry::params::version) < 0 or versioncmp($version, '8.0.0') >= 0
+      versioncmp($sentry::version, $sentry::params::version) < 0 or versioncmp($sentry::version, '8.0.0') >= 0
   ) {
     $sentry_http_params = "run web"
     $sentry_worker_params = "run worker"
