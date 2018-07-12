@@ -23,19 +23,19 @@ class sentry::service
   if $sentry::version and (
       versioncmp($sentry::version, $sentry::params::version) < 0 or versioncmp($version, '8.0.0') >= 0
   ) {
-    $sentry-http-params = "run web"
-    $sentry-worker-params = "run worker"
+    $sentry_http_params = "run web"
+    $sentry_worker_params = "run worker"
   } else {
-    $sentry-http-params = "start http"
-    $sentry-worker-params = "celery worker -B"
+    $sentry_http_params = "start http"
+    $sentry_worker_params = "celery worker -B"
   }
 
   supervisord::program {
     'sentry-http':
-      command => "${command} ${sentry-http-params}",
+      command => "${command} ${sentry_http_params}",
     ;
     'sentry-worker':
-      command => "${command} ${sentry-worker-params}",
+      command => "${command} ${sentry_worker_params}",
     ;
   } ->
 
