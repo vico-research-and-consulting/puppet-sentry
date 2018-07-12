@@ -18,7 +18,6 @@ class sentry::service
     redirect_stderr => true,
   }
 
-  anchor { 'sentry::service::begin': } ->
 
   if $sentry::version and (
       versioncmp($sentry::version, $sentry::params::version) < 0 or versioncmp($sentry::version, '8.0.0') >= 0
@@ -29,6 +28,8 @@ class sentry::service
     $sentry_http_params = "start http"
     $sentry_worker_params = "celery worker -B"
   }
+
+  anchor { 'sentry::service::begin': } ->
 
   supervisord::program {
     'sentry-http':
