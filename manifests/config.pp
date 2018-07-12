@@ -69,7 +69,8 @@ class sentry::config
       owner   => $sentry::owner,
       group   => $sentry::group,
       mode    => '0640',
-    } ->
+      require => File['${sentry::path}/sentry.conf.py'],
+    }
   }
 
   file { "${sentry::path}/.initialized":
