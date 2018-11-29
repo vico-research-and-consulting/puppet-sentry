@@ -18,14 +18,25 @@ class sentry::service
     redirect_stderr => true,
   }
 
+
+  if $sentry::version and (
+      versioncmp($sentry::version, $sentry::params::version) < 0 or versioncmp($sentry::version, '8.0.0') >= 0
+  ) {
+    $sentry_http_params = "run web"
+    $sentry_worker_params = "run worker"
+  } else {
+    $sentry_http_params = "start http"
+    $sentry_worker_params = "celery worker -B"
+  }
+
   anchor { 'sentry::service::begin': } ->
 
   supervisord::program {
     'sentry-http':
-      command => "${command} start http",
+      command => "${command} ${sentry_http_params}",
     ;
     'sentry-worker':
-      command => "${command} celery worker -B",
+      command => "${command} ${sentry_worker_params}",
     ;
   } ->
 
